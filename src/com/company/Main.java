@@ -4,7 +4,10 @@ public class Main {
 
     public static void main(String[] args)
     {
-        // TODO: 4/14/2020  create more threads and go on
+        /*
+                creating five threads with different
+                documents to read 
+         */
 
         Thread thread_1 =new Thread(new MultiTreads("document_1.txt"));
         thread_1.start();

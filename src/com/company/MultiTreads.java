@@ -1,10 +1,6 @@
 package com.company;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -17,8 +13,7 @@ import java.io.IOException;
 
 // main Thread with run method
 public class MultiTreads  implements  Runnable {
-    String address="";
-
+    String address;
     public MultiTreads(String address){
 
        this.address=address;
@@ -30,12 +25,13 @@ public class MultiTreads  implements  Runnable {
     public  void  run ()
     {
 
-        System.out.println(Thread.currentThread().getId());
-        try {
-            ReadingFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.out.println("thread with id : "+ Thread.currentThread().getId()+" is running");
+            try {
+                ReadingFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     // read file from given string as address
@@ -44,7 +40,7 @@ public class MultiTreads  implements  Runnable {
 
         FileReader fr = new FileReader(address);
         BufferedReader br=new BufferedReader(fr);
-        StringBuffer sb=new StringBuffer();
+        StringBuilder sb=new StringBuilder();
         String line;
 
         while ((line=br.readLine())!=null)
@@ -57,18 +53,15 @@ public class MultiTreads  implements  Runnable {
         /* return true or
          false depends on
          whether FindKey is true or not */
-        System.out.println(FindKey(sb.toString()));
+        System.out.println("result by thread with id "+Thread.currentThread().getId()
+                +" is "+(FindKey(sb.toString())));
+
     }
 
     // find a given string in file
     private boolean FindKey(String str) {
 
-        if (str.contains("key")){
-            return true;
-        }
-
-        return false;
+        return str.contains("key");
     }
-
 
 }

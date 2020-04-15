@@ -12,7 +12,6 @@ public class Main {
         Thread thread_1 =new Thread(new MultiTreads("document_1.txt"));
         thread_1.start();
 
-
         Thread thread_2 =new Thread(new MultiTreads("document_2.txt"));
         thread_2.start();
 

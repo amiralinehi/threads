@@ -6,71 +6,78 @@ import java.io.IOException;
 
 
 /*
- TODO: 4/15/2020
-  how stop other threads when output is true
+  TODO: 4/19/2020  if there is no
+  key word return no such a word
 */
-
 
 // main Thread with run method
 public class MultiTreads  extends   Thread {
 
     String address;
-    boolean process=true;
-    public MultiTreads(String address){
+    public  volatile boolean process = true;
 
-       this.address=address;
+    public MultiTreads(String address) {
+
+        this.address = address;
 
 
     }
     /* calls for ReadFile to apply
      it to all existing threads */
 
-    public  void  run ()
-    {
-           System.out.println("thread with id : "+ Thread.currentThread().getId()+" is running");
-        while (process){
+    public void run() {
+
+        System.out.println("thread with id : " + Thread.currentThread().getId() + " is running");
+        while (process) {
             try {
                 ReadingFile();
-            } catch (IOException e) {
+
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
     // read file from given string as address
-    public void ReadingFile() throws IOException {
+    public void ReadingFile() throws IOException, InterruptedException {
 
+        if (!Thread.currentThread().isInterrupted()) {
 
-        FileReader fr = new FileReader(address);
-        BufferedReader br=new BufferedReader(fr);
-        StringBuilder sb=new StringBuilder();
-        String line;
+            FileReader fr = new FileReader(address);
+            BufferedReader br = new BufferedReader(fr);
+            StringBuilder sb = new StringBuilder();
+            String line;
 
-        while ((line=br.readLine())!=null && !Thread.currentThread().isInterrupted())
-        {
+            while ((line = br.readLine()) != null) {
 
-            sb.append(line);
-            sb.append("\n");
-        }
+                sb.append(line);
+                sb.append("\n");
+            }
         /* return true or
          false depends on
          whether FindKey is true or not */
-        System.out.println("result by thread with id "+Thread.currentThread().getId()
-                +" is "+(FindKey(sb.toString())));
+            System.out.println("result by thread with id " + Thread.currentThread().getId()
+                    + " is " + (FindKey(sb.toString())));
+        }
     }
+
     // find a given string in file
-    private boolean FindKey(String str) {
+    private boolean FindKey(String str) throws InterruptedException {
 
         if (str.contains("key")) {
-            process=false;
+            Terminate();
             Thread.currentThread().interrupt();
             return true;
         }
 
-            return false;
+
+        Thread.currentThread().join();
+        return false;
+
     }
 
-
-
-
+    public void  Terminate(){
+        process=false;
+    }
 }

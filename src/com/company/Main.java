@@ -4,30 +4,22 @@ public class Main {
 
     public static void main(String[] args)
     {
-        /*
-                creating five threads with different
-                documents to read 
-         */
 
-        Thread thread_1 =new Thread(new MultiTreads("document_1.txt"));
-        thread_1.start();
-
-        Thread thread_2 =new Thread(new MultiTreads("document_2.txt"));
-        thread_2.start();
-
-        Thread thread_3 =new Thread(new MultiTreads("document_3.txt"));
-        thread_3.start();
+        String[] documents =new String[5];
+        documents[0]="document_1.txt";
+        documents[1]="document_2.txt";
+        documents[2]="document_3.txt";
+        documents[3]="document_4.txt";
+        documents[4]="document_5.txt";
 
 
-        Thread thread_4 =new Thread(new MultiTreads("document_4.txt"));
-        thread_4.start();
 
+        for (int i = 0; i <documents.length ; i++) {
 
-        Thread thread_5 =new Thread(new MultiTreads("document_5.txt"));
-        thread_5.start();
+            Thread object=new Thread(new MultiTreads(documents[i]));
+            object.start();
+            }
 
+        }
 
     }
-
-
-}

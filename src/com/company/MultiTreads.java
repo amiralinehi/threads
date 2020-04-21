@@ -1,14 +1,16 @@
 package com.company;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 
-/*
-  TODO: 4/19/2020  if there is no
-  key word return no such a word
-*/
+
+/*  TODO: 4/19/2020
+   if there is no key word return no such a word*/
+
 
 // main Thread with run method
 public class MultiTreads  extends   Thread {
@@ -71,12 +73,16 @@ public class MultiTreads  extends   Thread {
             return true;
         }
 
+        /*
+        join() waits for thread to die since
+        stop is deprecated */
 
         Thread.currentThread().join();
         return false;
 
     }
-
+    @NotNull
+    //a method for setting volatile boolean false `
     public void  Terminate(){
         process=false;
     }

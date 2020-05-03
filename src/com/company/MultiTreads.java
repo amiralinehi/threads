@@ -22,7 +22,6 @@ public class MultiTreads  extends   Thread {
 
         this.address = address;
 
-
     }
     /* calls for ReadFile to apply
      it to all existing threads */
@@ -62,6 +61,10 @@ public class MultiTreads  extends   Thread {
             System.out.println("result by thread with id " + Thread.currentThread().getId()
                     + " is " + (FindKey(sb.toString())));
         }
+        /*it prevent thread to keep running
+        * if this happen it means the thread is interrupted in other word result
+        * was false */
+        Terminate();
     }
 
     // find a given string in file
@@ -69,15 +72,15 @@ public class MultiTreads  extends   Thread {
 
         if (str.contains("key")) {
             Terminate();
-            Thread.currentThread().interrupt();
+
             return true;
         }
 
         /*
         join() waits for thread to die since
-        stop is deprecated */
-
-        Thread.currentThread().join();
+        stop is deprecated , kind of dying simulation
+        Thread.currentThread().join();*/
+        Thread.currentThread().interrupt();
         return false;
 
     }

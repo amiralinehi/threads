@@ -7,13 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-
-/*  TODO: 4/19/2020
-   if there is no key word return no such a word*/
+// TODO: 5/8/2020 completed
 
 
 // main Thread with run method
 public class MultiTreads  extends   Thread {
+
+    /*giving a reference to main thread*/
+    Thread t =Thread.currentThread();
 
     String address;
     public  volatile boolean process = true;
@@ -55,12 +56,14 @@ public class MultiTreads  extends   Thread {
                 sb.append(line);
                 sb.append("\n");
             }
+
         /* return true or
          false depends on
          whether FindKey is true or not */
             System.out.println("result by thread with id " + Thread.currentThread().getId()
                     + " is " + (FindKey(sb.toString())));
         }
+
         /*it prevent thread to keep running
         * if this happen it means the thread is interrupted in other word result
         * was false */
@@ -72,19 +75,18 @@ public class MultiTreads  extends   Thread {
 
         if (str.contains("key")) {
             Terminate();
+            t.stop();
+            /*this method is deprecated
+            by the way it stops main thread (in MultiTreads class not main class)*/
 
             return true;
         }
 
-        /*
-        join() waits for thread to die since
-        stop is deprecated , kind of dying simulation
-        Thread.currentThread().join();*/
         Thread.currentThread().interrupt();
         return false;
 
     }
-    @NotNull
+
     //a method for setting volatile boolean false `
     public void  Terminate(){
         process=false;
